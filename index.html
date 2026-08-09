@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate JS Mastery ⚡</title>
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Ultimate JS Mastery | بهترین آموزش جاوااسکریپت">
+    <meta property="og:description" content="آموزش جامع، تعاملی و عملی JavaScript از صفر تا صد.">
+    <!-- CSS & Fonts -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-layout">
+        
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon" style="color:var(--primary); font-size:1.5rem;">⚡</span>
+                    <span class="logo-text" style="font-family: var(--font-en); font-weight:800; letter-spacing:-0.5px;">JS Mastery</span>
+                </div>
+                <button class="close-btn" id="closeSidebar" style="position: relative; z-index: 99999; cursor: pointer; pointer-events: all;" aria-label="بستن منو" onclick="document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').classList.remove('show'); document.body.style.overflow='';" ontouchstart="document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').classList.remove('show'); document.body.style.overflow='';">×</button>
+            </div>
+            
+            <div class="sidebar-search">
+                <input type="text" id="sidebarSearchInput" placeholder="جستجو در آموزش‌ها..." autocomplete="off">
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h3 class="nav-title">فاز ۱: مبانی جاوااسکریپت</h3>
+                    <ul>
+                        <li class="active"><a href="#ch1"><span class="nav-icon">🚀</span>فصل ۱: مقدمه و متغیرها</a></li>
+                        <li><a href="#ch2"><span class="nav-icon">🗂️</span>فصل ۲: انواع داده‌ها</a></li>
+                        <li><a href="#ch3"><span class="nav-icon">🧮</span>فصل ۳: عملگرها و ریاضیات</a></li>
+                    </ul>
+                </div>
+                
+                <div class="nav-section">
+                    <h3 class="nav-title">فاز ۲: منطق و کنترل جریان</h3>
+                    <ul>
+                        <li><a href="#ch4"><span class="nav-icon">🔀</span>فصل ۴: شرط‌ها (If/Else)</a></li>
+                        <li><a href="#ch5"><span class="nav-icon">🔄</span>فصل ۵: حلقه‌ها (Loops)</a></li>
+                        <li><a href="#ch6"><span class="nav-icon">⚙️</span>فصل ۶: توابع (Functions)</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-title">فاز ۳: ساختارهای داده و DOM</h3>
+                    <ul>
+                        <li><a href="#ch7"><span class="nav-icon">📚</span>فصل ۷: آرایه‌ها (Arrays)</a></li>
+                        <li><a href="#ch8"><span class="nav-icon">📦</span>فصل ۸: اشیاء (Objects)</a></li>
+                        <li><a href="#ch9"><span class="nav-icon">🌐</span>فصل ۹: تعامل با صفحه (DOM)</a></li>
+                    </ul>
+                </div>
+                
+                                <div class="nav-section">
+                    <h3 class="nav-title">فاز ۴: جاوااسکریپت پیشرفته</h3>
+                    <ul>
+                        <li><a href="#ch10"><span class="nav-icon">✨</span>فصل ۱۰: امکانات ES6+</a></li>
+                        <li><a href="#ch11"><span class="nav-icon">⏳</span>فصل ۱۱: همزمانی و Promises</a></li>
+                        <li><a href="#ch12"><span class="nav-icon">💾</span>فصل ۱۲: حافظه مرورگر (Storage)</a></li>
+                        <li><a href="#ch13"><span class="nav-icon">🛡️</span>فصل ۱۳: مدیریت خطاها</a></li>
+                    </ul>
+                </div>
+                
+                <div class="nav-section">
+                    <h3 class="nav-title" style="color:var(--accent);">فاز نهایی</h3>
+                    <ul>
+                        <li><a href="#ch-cert" style="color:var(--accent); font-weight:bold;"><span class="nav-icon">🎓</span>دریافت گواهینامه</a></li>
+                    </ul>
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="progress-container">
+                    <div class="progress-info">
+                        <span>پیشرفت شما</span>
+                        <span>۰٪</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- Main Content -->
+        <div class="main-wrapper">
+            
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="menu-toggle" id="menuToggle" aria-label="باز کردن منو">☰</button>
+                    <div class="breadcrumbs">
+                        <span class="crumb">آموزش <span class="en-text">JavaScript</span></span>
+                        <span class="separator">/</span>
+                        <span class="crumb current" id="breadcrumbCurrent">فصل ۱: مقدمه و متغیرها</span>
+                    </div>
+                </div>
+                
+                <div class="topbar-actions">
+                    <a href="console.html" target="_blank" class="icon-btn" title="کنسول زنده JS" style="text-decoration:none; display:flex; justify-content:center; align-items:center; font-family: var(--font-code); font-weight: 800; font-size: 1.1rem; letter-spacing: -2px; color: #10b981; text-shadow: 0 0 5px rgba(16, 185, 129, 0.4);"><span style="color:#eab308;">&gt;</span><span style="animation: blink 1s step-end infinite;">_</span></a>
+                    <button class="icon-btn search-toggle" id="searchToggleBtn" title="جستجو (Ctrl+K)">🔍</button>
+                    <button class="icon-btn theme-toggle" id="themeToggleBtn" title="تغییر تم">🌙</button>
+                    <button class="icon-btn bookmark-toggle" id="bookmarkToggleBtn" title="نشانه‌گذاری‌های من">🔖</button>
+                </div>
+            </header>
+
+            <main class="content-area" id="mainScrollArea">
+                <div class="content-container" id="appContent">
+                    <div class="chapter-badge">فصل ۱</div>
+                    <h1 class="page-title">در حال بارگذاری...</h1>
+                </div>
+            </main>
+            
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div class="search-modal-overlay" id="searchOverlay"></div>
+    <div class="search-modal" id="searchModal">
+        <div class="search-input-wrapper">
+            <input type="text" id="searchInput" placeholder="جستجو در آموزش‌های JS..." autocomplete="off">
+            <div class="shortcut-hint">ESC</div>
+        </div>
+        <div class="search-results" id="searchResults">
+            <div class="search-empty">عبارتی را برای جستجو وارد کنید.</div>
+        </div>
+    </div>
+
+                    <div class="cs-card">
+                    <h3>مدیریت و حافظه</h3>
+                    <div class="cs-item"><span class="cs-tag">localStorage.setItem(k, v)</span> <span class="cs-desc">ذخیره دائم داده</span></div>
+                    <div class="cs-item"><span class="cs-tag">localStorage.getItem(k)</span> <span class="cs-desc">خواندن داده</span></div>
+                    <div class="cs-item"><span class="cs-tag">JSON.stringify()</span> <span class="cs-desc">تبدیل شیء به رشته</span></div>
+                    <div class="cs-item"><span class="cs-tag">try { } catch(e) { }</span> <span class="cs-desc">کنترل خطای مرگبار</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bookmarks Panel -->
+    <div class="bookmarks-panel" id="bookmarksPanel">
+        <div class="bookmarks-header">
+            <span>نشانه‌گذاری‌های من</span>
+            <button class="close-btn" id="closeBookmarksBtn" style="position: relative; z-index: 99999; cursor: pointer; pointer-events: all; display: flex;" aria-label="بستن منو" onclick="document.getElementById('bookmarksPanel').classList.remove('open');" ontouchstart="document.getElementById('bookmarksPanel').classList.remove('open');">×</button>
+        </div>
+        <div class="bookmarks-list" id="bookmarksList"></div>
+    </div>
+
+    <!-- Cheat Sheet Button -->
+    <button class="cheat-sheet-btn" id="cheatSheetBtn" title="تقلب‌نامه JS">💡</button>
+
+    <!-- Cheat Sheet Modal -->
+    <div class="cheat-sheet-modal" id="cheatSheetModal">
+        <div class="cs-header">
+            <div class="cs-title">💡 تقلب‌نامه JavaScript</div>
+            <button class="cs-close" id="closeCheatSheetBtn">×</button>
+        </div>
+        <div class="cs-content">
+            <div class="cs-grid">
+                <div class="cs-card">
+                    <h3>متغیرها و متدهای پایه</h3>
+                    <div class="cs-item"><span class="cs-tag">let x = 10;</span> <span class="cs-desc">متغیر قابل تغییر</span></div>
+                    <div class="cs-item"><span class="cs-tag">const y = 20;</span> <span class="cs-desc">ثابت غیرقابل تغییر</span></div>
+                    <div class="cs-item"><span class="cs-tag">console.log(x);</span> <span class="cs-desc">چاپ در کنسول</span></div>
+                    <div class="cs-item"><span class="cs-tag">typeof x;</span> <span class="cs-desc">بررسی نوع داده</span></div>
+                </div>
+                <div class="cs-card">
+                    <h3>رشته‌ها (Strings)</h3>
+                    <div class="cs-item"><span class="cs-tag">str.length</span> <span class="cs-desc">طول رشته</span></div>
+                    <div class="cs-item"><span class="cs-tag">str.toUpperCase()</span> <span class="cs-desc">حروف بزرگ</span></div>
+                    <div class="cs-item"><span class="cs-tag">str.includes('A')</span> <span class="cs-desc">بررسی وجود کلمه</span></div>
+                    <div class="cs-item"><span class="cs-tag">`Hi ${name}`</span> <span class="cs-desc">Template Literal</span></div>
+                </div>
+                <div class="cs-card">
+                    <h3>آرایه‌ها (Arrays)</h3>
+                    <div class="cs-item"><span class="cs-tag">arr.push(x)</span> <span class="cs-desc">افزودن به انتها</span></div>
+                    <div class="cs-item"><span class="cs-tag">arr.pop()</span> <span class="cs-desc">حذف از انتها</span></div>
+                    <div class="cs-item"><span class="cs-tag">arr.map(x => x*2)</span> <span class="cs-desc">تغییر کل اعضا</span></div>
+                    <div class="cs-item"><span class="cs-tag">arr.filter(x => x>5)</span> <span class="cs-desc">فیلتر کردن</span></div>
+                </div>
+                <div class="cs-card">
+                    <h3>توابع (Functions)</h3>
+                    <div class="cs-item"><span class="cs-tag">function f(x) {}</span> <span class="cs-desc">تابع کلاسیک</span></div>
+                    <div class="cs-item"><span class="cs-tag">const f = (x) => {}</span> <span class="cs-desc">تابع Arrow (پیکانی)</span></div>
+                    <div class="cs-item"><span class="cs-tag">return x;</span> <span class="cs-desc">خروجی تابع</span></div>
+                </div>
+                <div class="cs-card">
+                    <h3>تعامل با DOM</h3>
+                    <div class="cs-item"><span class="cs-tag">document.getElementById()</span> <span class="cs-desc">یافتن با ID</span></div>
+                    <div class="cs-item"><span class="cs-tag">document.querySelector()</span> <span class="cs-desc">یافتن با سلکتور CSS</span></div>
+                    <div class="cs-item"><span class="cs-tag">el.innerHTML = ''</span> <span class="cs-desc">تغییر محتوای HTML</span></div>
+                    <div class="cs-item"><span class="cs-tag">el.style.color = 'red'</span> <span class="cs-desc">تغییر استایل</span></div>
+                    <div class="cs-item"><span class="cs-tag">el.addEventListener()</span> <span class="cs-desc">گوش دادن به رویداد</span></div>
+                </div>
+                <div class="cs-card">
+                    <h3>همزمانی و زمان</h3>
+                    <div class="cs-item"><span class="cs-tag">setTimeout(f, 1000)</span> <span class="cs-desc">تأخیر ۱ ثانیه‌ای</span></div>
+                    <div class="cs-item"><span class="cs-tag">setInterval(f, 1000)</span> <span class="cs-desc">تکرار هر ۱ ثانیه</span></div>
+                    <div class="cs-item"><span class="cs-tag">fetch(url).then()</span> <span class="cs-desc">دریافت از سرور</span></div>
+                    <div class="cs-item"><span class="cs-tag">async / await</span> <span class="cs-desc">مدیریت کدهای ناهمگام</span></div>
+                </div>
+                <div class="cs-card">
+                    <h3>مدیریت و حافظه</h3>
+                    <div class="cs-item"><span class="cs-tag">localStorage.setItem(k, v)</span> <span class="cs-desc">ذخیره دائم داده</span></div>
+                    <div class="cs-item"><span class="cs-tag">localStorage.getItem(k)</span> <span class="cs-desc">خواندن داده</span></div>
+                    <div class="cs-item"><span class="cs-tag">JSON.stringify()</span> <span class="cs-desc">تبدیل شیء به رشته</span></div>
+                    <div class="cs-item"><span class="cs-tag">try { } catch(e) { }</span> <span class="cs-desc">کنترل خطای مرگبار</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js?v=1786279140"></script>
+    <script src="js/app.js?v=1786279140"></script>
+</body>
+</html>

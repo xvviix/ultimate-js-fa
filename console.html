@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="fa" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Console | Ultimate Mastery</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Vazirmatn:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --primary: #facc15;
+            --accent: #3b82f6;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --font-code: 'JetBrains Mono', monospace;
+            --font-fa: 'Vazirmatn', sans-serif;
+            --font-en: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-fa);
+            background-color: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header {
+            background: var(--surface);
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--font-en);
+            font-weight: 700;
+            color: #8b949e;
+            direction: ltr;
+            font-size: 0.95rem;
+        }
+
+        .mac-dots { display: flex; gap: 8px; }
+        .mac-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .mac-dot.red { background: #ff5f56; }
+        .mac-dot.yellow { background: #ffbd2e; }
+        .mac-dot.green { background: #27c93f; }
+
+        .actions { display: flex; gap: 10px; }
+        .btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-family: var(--font-fa);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn:hover { background: var(--border); }
+        .btn.primary { background: var(--primary); border-color: var(--primary); color: #0f172a; font-weight:bold; }
+        .btn.primary:hover { background: #ca8a04; }
+
+        .workspace {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+        }
+        
+        @media (min-width: 768px) {
+            .workspace { flex-direction: row; }
+        }
+
+        .console-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-bottom: 2px solid var(--border);
+            background-color: var(--bg);
+        }
+
+        @media (min-width: 768px) {
+            .console-panel {
+                border-bottom: none;
+                border-right: 2px solid var(--border);
+            }
+        }
+
+        .panel-header {
+            background: #1c2128;
+            color: #8b949e;
+            padding: 6px 16px;
+            font-family: var(--font-en);
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            direction: ltr;
+        }
+
+        .terminal-body {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            font-family: var(--font-code);
+            font-size: 14px;
+            direction: ltr;
+        }
+
+        .terminal-body::-webkit-scrollbar { width: 8px; }
+        .terminal-body::-webkit-scrollbar-track { background: transparent; }
+        .terminal-body::-webkit-scrollbar-thumb { background: #30363d; border-radius: 4px; }
+
+        .welcome-msg {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-family: var(--font-fa);
+            direction: rtl;
+            text-align: right;
+            border: 1px dashed #30363d;
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(22, 27, 34, 0.5);
+        }
+
+        .welcome-msg h2 {
+            font-family: var(--font-en);
+            direction: ltr;
+            text-align: left;
+            margin-bottom: 10px;
+            color: var(--success);
+        }
+
+        .output-line {
+            margin-bottom: 4px;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        .output-line.cmd { color: var(--primary); font-weight: bold; }
+        .output-line.result { color: var(--text); }
+        .output-line.error { color: var(--error); }
+        .output-line.warn { color: var(--warning); }
+        .output-line.log { color: var(--text); }
+        .output-line.success { color: var(--success); }
+        .output-line.info { color: #8b949e; font-style: italic; }
+
+        .input-line {
+            display: flex;
+            align-items: flex-start;
+            margin-top: 10px;
+        }
+
+        .prompt {
+            color: var(--success);
+            margin-right: 10px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .cmd-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-family: var(--font-code);
+            font-size: 15px;
+            outline: none;
+            caret-color: var(--primary);
+            resize: none;
+            overflow: hidden;
+            height: 24px;
+        }
+
+        .preview-panel {
+            flex: 1;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .preview-iframe {
+            flex: 1;
+            width: 100%;
+            border: none;
+            background: white;
+        }
+
+        .toast-notification {
+            position: fixed;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--success);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            z-index: 100000;
+            transition: bottom 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: bold;
+            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.4);
+            pointer-events: none;
+        }
+        .toast-notification.show { bottom: 30px; }
+    </style>
+</head>
+<body onclick="document.getElementById('cmdInput').focus()">
+
+    <div class="header">
+        <div class="actions">
+            <button class="btn" id="clearBtn">🗑️ پاک کردن صفحه</button>
+        </div>
+        <div class="title">
+            JS Console REPL
+            <div class="mac-dots">
+                <div class="mac-dot green"></div>
+                <div class="mac-dot yellow"></div>
+                <div class="mac-dot red"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="workspace">
+        <div class="console-panel">
+            <div class="panel-header">
+                <span>Terminal</span>
+            </div>
+            <div class="terminal-body" id="terminalBody">
+                <div class="welcome-msg">
+                    <h2 style="text-align: left; direction: ltr; font-family: var(--font-code);">JS Interactive Terminal v3.0</h2>
+                    <p>این یک محیط اجرای زنده کدهای جاوااسکریپت (REPL) با قابلیت خروجی مستقیم DOM است.</p>
+                    <p style="margin-top: 10px; color: #8b949e; font-size: 0.9em;">- دستور جادویی <code style="color:var(--primary)">render('کد HTML')</code> را برای نمایش گرافیکی بنویسید!</p>
+                    <p style="color: #8b949e; font-size: 0.9em;">- با تایپ <code style="color:var(--primary)">help</code> لیست کامل دستورات را ببینید.</p>
+                </div>
+                <div id="outputArea"></div>
+                <div class="input-line">
+                    <span class="prompt">guest@mastery:~$</span>
+                    <input type="text" id="cmdInput" class="cmd-input" autocomplete="off" spellcheck="false" autofocus>
+                </div>
+            </div>
+        </div>
+
+        <div class="preview-panel">
+            <div class="panel-header" style="background:#f1f5f9; color:#475569; border-bottom:1px solid #cbd5e1;">
+                <span>DOM Viewer</span>
+                <button onclick="document.getElementById('previewIframe').srcdoc=''" style="background:transparent; border:1px solid #cbd5e1; padding:2px 8px; border-radius:4px; cursor:pointer; color:#e11d48; font-family:var(--font-fa); font-size:0.75rem;">Clear DOM</button>
+            </div>
+            <iframe id="previewIframe" class="preview-iframe" sandbox="allow-scripts allow-modals allow-forms"></iframe>
+        </div>
+    </div>
+
+    <script>
+        const outputArea = document.getElementById('outputArea');
+        const cmdInput = document.getElementById('cmdInput');
+        const terminalBody = document.getElementById('terminalBody');
+        const iframe = document.getElementById('previewIframe');
+        
+        let history = [];
+        let historyIndex = -1;
+
+        cmdInput.focus();
+
+        function showToast(msg) {
+            let toast = document.getElementById('globalToast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'globalToast';
+                toast.className = 'toast-notification';
+                document.body.appendChild(toast);
+            }
+            toast.innerText = msg;
+            toast.classList.add('show');
+            if(window.toastTimeout) clearTimeout(window.toastTimeout);
+            window.toastTimeout = setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        function printLine(text, type = 'result') {
+            const line = document.createElement('div');
+            line.className = `output-line ${type}`;
+            if (typeof text === 'object' && text !== null) {
+                try { line.textContent = JSON.stringify(text, null, 2); } catch(e) { line.textContent = String(text); }
+            } else {
+                line.textContent = String(text);
+            }
+            outputArea.appendChild(line);
+            terminalBody.scrollTop = terminalBody.scrollHeight;
+        }
+
+        window.render = function(htmlString) {
+            const baseStyles = '<style>body{font-family:system-ui,-apple-system,sans-serif; direction:rtl; padding:20px; color:#1f2937; margin:0;}</style>';
+            iframe.srcdoc = baseStyles + htmlString;
+            return "DOM Rendered successfully! 👁️";
+        };
+
+        window.clear = function() {
+            outputArea.innerHTML = '';
+            return '';
+        };
+
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+
+        console.log = function(...args) { printLine(args.join(' '), 'log'); originalLog.apply(console, args); };
+        console.error = function(...args) { printLine(args.join(' '), 'error'); originalError.apply(console, args); };
+        console.warn = function(...args) { printLine(args.join(' '), 'warn'); originalWarn.apply(console, args); };
+        window.onerror = function(msg) { printLine(`${msg}`, 'error'); return false; };
+
+        const commands = {
+            help: () => {
+                printLine('Available Commands:', 'info');
+                printLine('  render("html") - Renders HTML elements in the DOM viewer');
+                printLine('  clear()        - Clears the terminal screen');
+                printLine('  date()         - Shows current date and time');
+                printLine('  echo(x)        - Prints x to the console');
+                printLine('  help           - Shows this help message');
+                printLine('\n* You can type any valid JavaScript code here.', 'info');
+                return '';
+            }
+        };
+
+        cmdInput.addEventListener('keydown', async function(e) {
+            if (e.key === 'Enter') {
+                const cmd = cmdInput.value;
+                if (!cmd.trim()) return;
+
+                printLine(`guest@mastery:~$ ${cmd}`, 'cmd');
+                history.push(cmd);
+                historyIndex = history.length;
+                cmdInput.value = '';
+
+                const trimmedCmd = cmd.trim().toLowerCase();
+                if (trimmedCmd === 'help') { commands.help(); return; }
+                if (trimmedCmd === 'clear') { window.clear(); return; }
+
+
+                try {
+                    // Create an invisible iframe for evaluation
+                    let replSandbox = document.getElementById('repl-sandbox');
+                    if (!replSandbox) {
+                        replSandbox = document.createElement('iframe');
+                        replSandbox.id = 'repl-sandbox';
+                        replSandbox.style.display = 'none';
+                        replSandbox.setAttribute('sandbox', 'allow-scripts');
+                        document.body.appendChild(replSandbox);
+                        
+                        window.addEventListener('message', (e) => {
+                            if (e.data.source === 'repl-sandbox') {
+                                if (e.data.type === 'log') printLine(e.data.args.join(' '), 'log');
+                                if (e.data.type === 'error') printLine(e.data.args.join(' '), 'error');
+                                if (e.data.type === 'warn') printLine(e.data.args.join(' '), 'warn');
+                                if (e.data.type === 'result') {
+                                    const res = e.data.val;
+                                    if (typeof res === 'string') printLine(`'${res}'`, 'success');
+                                    else if (typeof res === 'number' || typeof res === 'boolean') printLine(res, 'warn');
+                                    else printLine(res, 'result');
+                                }
+                                if (e.data.type === 'render') {
+                                    window.render(e.data.val);
+                                    printLine('HTML Rendered! ✅', 'success');
+                                }
+                            }
+                        });
+                    }
+
+                    // Inject the user's command into the iframe
+                    // The command might return a value we want to capture. We'll capture the last expression if possible, 
+                    // but since we are wrapping in an IIFE, we just let them use console.log or capture explicitly.
+                    // Actually, to capture return values of arbitrary code without eval is tricky in a script tag.
+                    // Let's just execute it and let them use console.log.
+                    
+                    const scriptCode = `
+                        <script>
+                            const console = {
+                                log: (...args) => window.parent.postMessage({source: 'repl-sandbox', type: 'log', args}, '*'),
+                                error: (...args) => window.parent.postMessage({source: 'repl-sandbox', type: 'error', args}, '*'),
+                                warn: (...args) => window.parent.postMessage({source: 'repl-sandbox', type: 'warn', args}, '*')
+                            };
+                            window.onerror = (msg) => { console.error(msg); return false; };
+                            
+                            const render = (html) => window.parent.postMessage({source: 'repl-sandbox', type: 'render', val: html}, '*');
+                            const clear = () => window.parent.postMessage({source: 'repl-sandbox', type: 'clear'}, '*');
+                            const date = () => new Date().toString();
+                            const echo = (x) => x;
+
+                            (async () => {
+                                try {
+                                    ${cmd}
+                                } catch(e) {
+                                    console.error(e.message);
+                                }
+                            })();
+                        </script>
+                    `;
+                    replSandbox.srcdoc = scriptCode;
+
+                } catch (err) {
+                    printLine(err.toString(), 'error');
+                }
+
+            } 
+            else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (historyIndex > 0) { historyIndex--; cmdInput.value = history[historyIndex]; }
+            } 
+            else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (historyIndex < history.length - 1) { historyIndex++; cmdInput.value = history[historyIndex]; } 
+                else { historyIndex = history.length; cmdInput.value = ''; }
+            }
+        });
+
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            window.clear();
+            iframe.srcdoc = '';
+            showToast('کنسول پاک شد 🗑️');
+            cmdInput.focus();
+        });
+    </script>
+</body>
+</html>
